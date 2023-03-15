@@ -1,0 +1,38 @@
+{
+  "goods": [
+    {
+      "name": "af",
+      "id": 1
+    },
+    {
+      "name": "afs",
+      "id": 2
+    },
+    {
+      "name": "f",
+      "id": 3
+    },
+    {
+      "name": "123",
+      "id": 4
+    },
+    {
+      "name": "321",
+      "id": 5
+    },
+    {
+      "name": "12341312",
+      "id": 6
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
