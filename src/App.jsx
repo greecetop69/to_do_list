@@ -25,6 +25,7 @@ function App() {
 	const handlerDeleteProduct = async (id) => {
 		await deleteProduct(id);
 	};
+
 	const handlerChangeProduct = async (item) => {
 		const text = prompt('hello');
 		await changeProduct({ ...item, name: text });
@@ -50,7 +51,6 @@ function App() {
 						onChange={(e) => setNewProduct(e.target.value)}
 						value={newProduct}
 					/>
-					{/* <input type='text' value={newProduct} onChange={(e) => setNewProduct(e.target.value)} /> */}
 					<Button onClick={handleAddProduct} className='ml-3 w-30 h-10 bg-blue-700 text-white	'>
 						Add Product
 					</Button>

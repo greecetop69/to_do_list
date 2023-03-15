@@ -27,13 +27,6 @@ export const goodsApi = createApi({
             }),
             invalidatesTags: ['product']
         }),
-        deleteAllProducts: build.mutation({
-            query: () => ({
-                url: `goods/`,
-                method: 'DELETE',
-            }),
-            invalidatesTags: ['product']
-        }),
         changeProduct: build.mutation({
             query: (item) => ({
                 url: `goods/${item.id}`,
@@ -44,4 +37,4 @@ export const goodsApi = createApi({
         }),
     })
 })
-export const { useGetGoodsQuery, useAddProductMutation, useDeleteProductMutation, useChangeProductMutation, useDeleteAllProductsMutation } = goodsApi
+export const { useGetGoodsQuery, useAddProductMutation, useDeleteProductMutation, useChangeProductMutation } = goodsApi
