@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
 import App from './App';
 import './index.css';
-import { store } from './redux';
+import { ContextRootStore, store } from './mst/store/RootStore';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-	<Provider store={store}>
+	<ContextRootStore.Provider value={store}>
 		<App />
-	</Provider>,
+	</ContextRootStore.Provider>,
 );

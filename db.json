@@ -1,18 +1,8 @@
 {
   "goods": [
     {
-      "name": "чсм",
-      "id": 6
+      "id": 0.08114389188619042,
+      "title": "asfafasf"
     }
-  ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }

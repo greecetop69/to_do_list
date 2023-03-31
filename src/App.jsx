@@ -1,40 +1,41 @@
 import { Button, Input } from 'antd';
 import { AppstoreAddOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { useState } from 'react';
-import {
-	useAddProductMutation,
-	useGetGoodsQuery,
-	useDeleteProductMutation,
-	useChangeProductMutation,
-} from './redux';
+import { useEffect, useState } from 'react';
+
+import { observer } from 'mobx-react-lite';
+import { useRootStore } from './mst/store/RootStore';
 
 function App() {
-	const { data = [], isLoading } = useGetGoodsQuery();
-	const [newProduct, setNewProduct] = useState('');
-	const [addProduct, { isError }] = useAddProductMutation();
-	const [deleteProduct] = useDeleteProductMutation();
-	const [changeProduct] = useChangeProductMutation();
+	const [newTodo, setNewTodo] = useState('');
+	const { addTodo, removeTodoById, fetchProducts, todos } = useRootStore();
 
-	const handleAddProduct = async () => {
-		if (newProduct) {
-			await addProduct({ name: newProduct }).unwrap();
-			setNewProduct('');
+	const handleAddTodo = () => {
+		if (newTodo) {
+			addTodo(newTodo);
+			setNewTodo('');
 		}
 	};
 
-	const handlerDeleteProduct = async (id) => {
-		await deleteProduct(id);
+	const handlerDeleteProduct = (id) => {
+		removeTodoById(id);
 	};
 
-	const handlerChangeProduct = async (item) => {
-		const text = prompt('hello');
-		await changeProduct({ ...item, name: text });
+	const handlerChangeTodo = (item) => {
+		const text = prompt('hello', item.title);
+		if (text) {
+			const todoChange = todos.find((el) => el.id === item.id);
+			todoChange.setName(text);
+		} else {
+			alert('text must have at least 1 character');
+		}
 	};
 
-	if (isLoading) return <h1> loading..</h1>;
+	useEffect(() => {
+		fetchProducts();
+	}, []);
 
 	return (
-		<div className='flex items-center justify-center '>
+		<div className='flex items-center justify-center  bg-white'>
 			<div className='w-[1000px]  h-[670px] mt-6 rounded-[32px] flex-col text-center bg-white border border-solid shadow shadow-blue-500/40 hover:shadow-indigo-500/40'>
 				<p className='w-[360px] h-[57px] mt-[72px] ml-[300px] font-bold	 text-3xl leading-7 tracking-widest text-regal-blue		'>
 					Daily To Do List
@@ -48,17 +49,18 @@ function App() {
 						placeholder='Product'
 						prefix={<AppstoreAddOutlined />}
 						type='text'
-						onChange={(e) => setNewProduct(e.target.value)}
-						value={newProduct}
+						onChange={(e) => setNewTodo(e.target.value)}
+						value={newTodo}
 					/>
-					<Button onClick={handleAddProduct} className='ml-3 w-30 h-10 bg-blue-700 text-white	'>
-						Add Product
+					<Button onClick={handleAddTodo} className='ml-3 w-30 h-10 bg-blue-700 text-white	'>
+						Add addTodo
 					</Button>
 				</div>
 				<ul className='mt-5'>
-					{data.map((item) => (
+					{todos.map((item) => (
 						<li key={item.id} className='mt-2'>
-							{item.name}{' '}
+							{item.title}
+							{'  '}
 							<Button
 								prefix={<EditOutlined />}
 								className='text-black pr-2'
@@ -68,7 +70,7 @@ function App() {
 								<DeleteOutlined />
 							</Button>
 							<Button
-								onClick={() => handlerChangeProduct(item)}
+								onClick={() => handlerChangeTodo(item)}
 								type='primary'
 								shape='quard'
 								className='text-black'>
@@ -82,4 +84,4 @@ function App() {
 	);
 }
 
-export default App;
+export default observer(App);
